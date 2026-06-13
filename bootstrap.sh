@@ -474,7 +474,7 @@ phase5b_wiring() {
     resolved_model="$FABLE_MODEL"
     log "  model override: $resolved_model"
   else
-    local tier="${FABLE_MODEL_TIER:-fable}"
+    local tier="${FABLE_MODEL_TIER:-sonnet}"
     log "  querying Anthropic for newest $tier model..."
     resolved_model="$("$PYTHON" - "$tier" <<'PYMODEL'
 import json, sys, urllib.request
@@ -610,7 +610,7 @@ phase7_smoke() {
     -H "x-api-key: $ANTHROPIC_API_KEY" \
     -H "anthropic-version: 2023-06-01" \
     -H "content-type: application/json" \
-    -d "{\"model\":\"${FABLE_MODEL:-claude-fable-5}\",\"max_tokens\":8,\"messages\":[{\"role\":\"user\",\"content\":\"smoke: reply ok\"}]}" \
+    -d "{\"model\":\"${FABLE_MODEL:-claude-sonnet-4-5}\",\"max_tokens\":8,\"messages\":[{\"role\":\"user\",\"content\":\"smoke: reply ok\"}]}" \
     "http://127.0.0.1:${FABLE_PROXY_PORT:-8377}/v1/messages")"
   [ "$status" = "200" ] || die "smoke test" "proxied request failed: HTTP $status"
   after="$(cat "$FABLE_AUDIT_DIR"/audit-*.jsonl 2>/dev/null | wc -l)"
@@ -619,7 +619,7 @@ phase7_smoke() {
   # end-to-end smoke through the real fable binary: exercises the Go SDK's
   # request construction (params, timeouts), not just raw HTTP like curl.
   # this is what caught nothing when curl passed but the SDK sent
-  # unsupported params (e.g. temperature on claude-fable-5).
+  # unsupported params (e.g. temperature on claude-sonnet-4-5).
   log "  running end-to-end smoke via fable binary..."
   local e2e_out
   if e2e_out="$(ANTHROPIC_BASE_URL="http://127.0.0.1:${FABLE_PROXY_PORT:-8377}" \

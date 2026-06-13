@@ -122,7 +122,7 @@ def cmd_rotate(_args):
 # Pricing per 1M tokens (USD) — update when Anthropic changes pricing
 PRICING = {
     # model-prefix: (input, output, cache_read, cache_write)
-    "claude-fable-5":    (10.00, 50.00, 1.00, 12.50),
+    "claude-sonnet-4-5":    (10.00, 50.00, 1.00, 12.50),
     "claude-sonnet-4-5":  (3.00,  15.00, 0.30, 3.75),
     "claude-sonnet-4-6":  (3.00,  15.00, 0.30, 3.75),
     "claude-sonnet-4-20250514":  (3.00,  15.00, 0.30, 3.75),
